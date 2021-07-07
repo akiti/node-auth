@@ -1,0 +1,47 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>hello</h1>
+    <h3>Registeration Form</h3>
+    <form id="register-form">
+        <label for="firstname">Email</label>
+        <input type="email" name="email" placeholder="Enter your email">
+        <br>
+        <label for="password">Password</label>
+        <input type="password" name="password" placeholder="Enter your password">
+        <br>
+        <button type="submit">Register</button>
+    </form>
+    <script>
+        (() => {
+            const form = document.getElementById('register-form');
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                try {
+
+                    const values = Object.values(form).reduce((obj, field) => {
+                        if (field.name) {
+                            obj[field.name] = field.value
+                        }  
+                        return obj;
+                    }, {})
+                    const res = fetch('/api/register', {
+                        method: "POST",
+                        body: JSON.stringify(values),
+                        headers: {"Content-type":"application/json; charset=UTF-8"}
+                    })
+                   // console.log("values", values)
+                } catch(e) {
+                    console.error(`error`)
+                }
+            })
+        })()
+
+    </script>
+</body>
+</html>
